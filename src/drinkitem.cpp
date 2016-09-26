@@ -60,7 +60,6 @@ bool DrinkItem::purchase()
 	if (!quantity > 0)
 		return false;
 	quantity--;
-	std::cout<<name<<": "<<quantity<<"\n";
 	purchased++;
 	sales += price;
 	return true;
