@@ -1,9 +1,7 @@
-/*
- * drinkitem.cpp
- *
- *  Created on: Sep 24, 2016
- *      Author: Dylan Yu
- */
+// Assignment 2 for CS 2336.002
+// Programmer: Dylan Yu
+// Description:
+// <Comments here to describe what the application does>
 
 #include "drinkitem.h"
 #include <iostream>

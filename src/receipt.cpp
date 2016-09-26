@@ -1,9 +1,8 @@
-/*
- * receipt.cpp
- *
- *  Created on: Sep 25, 2016
- *      Author: Dylan Yu
- */
+// Assignment 2 for CS 2336.002
+// Programmer: Dylan Yu
+// Description:
+// <Comments here to describe what the application does>
+
 #include "receipt.h"
 Receipt::Receipt()
 {

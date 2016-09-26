@@ -1,9 +1,8 @@
-/*
- * drinkmachine.cpp
- *
- *  Created on: Sep 24, 2016
- *      Author: Dylan Yu
- */
+// Assignment 2 for CS 2336.002
+// Programmer: Dylan Yu
+// Description:
+// <Comments here to describe what the application does>
+
 #include "drinkmachine.h"
 #include "receipt.h"
 #include <iostream>
@@ -17,7 +16,7 @@ DrinkMachine::DrinkMachine()
 	version = 1;
 	numDrinks = 0;
 	inFile >> numDrinks;
-	outFile<<numDrinks<<"\n";
+	outFile << numDrinks << "\n";
 	for (unsigned int i = 0; i < numDrinks; i++)
 	{
 		std::string name;
@@ -25,9 +24,9 @@ DrinkMachine::DrinkMachine()
 		unsigned int quantity;
 		inFile >> name >> price >> quantity;
 		drinks[i] = DrinkItem(name, price, quantity);
-		outFile << std::setw(27) << std::left<<name<< std::right;
-		outFile << std::setw(7) << std::fixed<<std::setprecision(2)<<price<<std::setprecision(std::cout.precision());
-		outFile << std::setw(7) << quantity<<"\n";
+		outFile << std::setw(20) << std::left << name << std::right;
+		outFile << std::setw(7) << std::fixed << std::setprecision(2) << price << std::setprecision(std::cout.precision());
+		outFile << std::setw(7) << quantity << "\n";
 	}
 	inFile.close();
 	outFile.close();
@@ -38,9 +37,9 @@ DrinkMachine::~DrinkMachine()
 	outFile << numDrinks << "\n";
 	for (unsigned int i = 0; i < numDrinks; i++)
 	{
-		outFile << std::setw(20) << std::left << drinks[i].getName() << " ";
-		outFile << std::setw(6) << drinks[i].getPrice() << " ";
-		outFile << std::setw(4) << drinks[i].getQuantity() << "\n";
+		outFile << std::setw(20) << std::left << drinks[i].getName() << std::right;
+		outFile << std::setw(7) << std::fixed << std::setprecision(2) << drinks[i].getPrice() << std::setprecision(std::cout.precision());
+		outFile << std::setw(7) << drinks[i].getQuantity() << "\n";
 	}
 }
 unsigned int DrinkMachine::size() const
@@ -70,12 +69,12 @@ double DrinkMachine::getPrice(unsigned int drinkId) const
 Receipt DrinkMachine::purchase(unsigned int drinkId, double amount)
 {
 	DrinkItem drink = drinks[drinkId];
-	if(amount >= drink.getPrice())
+	if (amount >= drink.getPrice())
 	{
-		if(drink.getQuantity()>0)
+		if (drink.getQuantity() > 0)
 		{
 			drinks[drinkId].purchase();
-			return Receipt(amount-drink.getPrice());
+			return Receipt(amount - drink.getPrice());
 		}
 		return Receipt("Empty");
 	}
@@ -98,11 +97,12 @@ void DrinkMachine::print(std::ostream& outStream) const
 	for (unsigned int i = 0; i < numDrinks; i++)
 	{
 		outStream << std::setw(6) << i;
-		outStream << " " << std::setw(27) << std::left<<drinks[i].getName()<< std::right;
+		outStream << " " << std::setw(27) << std::left << drinks[i].getName()
+				<< std::right;
 		outStream << std::setw(7) << drinks[i].getPrice();
 		outStream << std::setw(7) << drinks[i].getQuantity();
 		outStream << std::setw(7) << drinks[i].getPurchased();
-		outStream << std::setw(9) << drinks[i].getSales() <<"\n";
+		outStream << std::setw(9) << drinks[i].getSales() << "\n";
 	}
 }
 double DrinkMachine::sales() const
