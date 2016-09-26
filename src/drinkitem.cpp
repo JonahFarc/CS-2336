@@ -55,7 +55,7 @@ void DrinkItem::addDrinks(unsigned int amount)
 }
 bool DrinkItem::purchase()
 {
-	if(!quantity > 0)
+	if (!quantity > 0)
 		return false;
 	quantity--;
 	purchased++;

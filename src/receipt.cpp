@@ -11,28 +11,28 @@ Receipt::Receipt()
 }
 Receipt::Receipt(std::string state)
 {
-	this->state = state;
-	change = 0.0;
+	this->state=state;
+	change=0.0;
 }
 Receipt::Receipt(double change)
 {
 	state = "Success";
-	this->change = change;
+	this->change=change;
 }
 bool Receipt::success() const
 {
-	return state == "Success";
+	return state=="Success";
 }
 bool Receipt::insufficient() const
 {
-	return state == "Insufficient";
+	return state=="Insufficient";
 }
 bool Receipt::empty() const
 {
-	return state == "Empty";
+	return state=="Empty";
 }
 double Receipt::getChange() const
-{
+{\
 	return change;
 }
 
