@@ -17,7 +17,7 @@ DrinkMachine::DrinkMachine()
 	numDrinks = 0;
 	inFile >> numDrinks;
 	outFile << numDrinks << "\n";
-	for (unsigned int i = 0; i < numDrinks; i++)
+	for(unsigned int i = 0; i < numDrinks; i++)
 	{
 		std::string name;
 		double price;
@@ -35,7 +35,7 @@ DrinkMachine::~DrinkMachine()
 {
 	std::ofstream outFile("drink.txt");
 	outFile << numDrinks << "\n";
-	for (unsigned int i = 0; i < numDrinks; i++)
+	for(unsigned int i = 0; i < numDrinks; i++)
 	{
 		outFile << std::setw(20) << std::left << drinks[i].getName() << std::right;
 		outFile << std::setw(7) << std::fixed << std::setprecision(2) << drinks[i].getPrice() << std::setprecision(std::cout.precision());
@@ -69,9 +69,9 @@ double DrinkMachine::getPrice(unsigned int drinkId) const
 Receipt DrinkMachine::purchase(unsigned int drinkId, double amount)
 {
 	DrinkItem drink = drinks[drinkId];
-	if (amount >= drink.getPrice())
+	if(amount >= drink.getPrice())
 	{
-		if (drink.getQuantity() > 0)
+		if(drink.getQuantity() > 0)
 		{
 			drinks[drinkId].purchase();
 			return Receipt(amount - drink.getPrice());
@@ -94,11 +94,10 @@ void DrinkMachine::print(std::ostream& outStream) const
 	outStream << std::setw(7) << "Qty ";
 	outStream << std::setw(7) << "Sold ";
 	outStream << std::setw(9) << "Sales $\n";
-	for (unsigned int i = 0; i < numDrinks; i++)
+	for(unsigned int i = 0; i < numDrinks; i++)
 	{
 		outStream << std::setw(6) << i;
-		outStream << " " << std::setw(27) << std::left << drinks[i].getName()
-				<< std::right;
+		outStream << " " << std::setw(27) << std::left << drinks[i].getName() << std::right;
 		outStream << std::setw(7) << drinks[i].getPrice();
 		outStream << std::setw(7) << drinks[i].getQuantity();
 		outStream << std::setw(7) << drinks[i].getPurchased();
@@ -108,7 +107,7 @@ void DrinkMachine::print(std::ostream& outStream) const
 double DrinkMachine::sales() const
 {
 	double sum = 0;
-	for (unsigned int i = 0; i < numDrinks; i++)
+	for(unsigned int i = 0; i < numDrinks; i++)
 		sum += drinks[i].getSales();
 	return sum;
 }
