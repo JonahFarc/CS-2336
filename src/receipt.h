@@ -1,7 +1,6 @@
 // Assignment 2 for CS 2336.002
 // Programmer: Dylan Yu
-// Description:
-// <Comments here to describe what the application does>
+// Description: This is the header file for Receipt. This creates the variables and future methods used.
 
 #ifndef RECEIPT_H_
 #define RECEIPT_H_
@@ -10,9 +9,11 @@
 
 class Receipt
 {
+	//initialize variables for the receipt
 	private:
 		std::string state;
 		double change;
+	//prototype methods to be used later
 	public:
 		Receipt();
 		Receipt(std::string state);

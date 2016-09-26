@@ -1,7 +1,6 @@
 // Assignment 2 for CS 2336.002
 // Programmer: Dylan Yu
-// Description:
-// <Comments here to describe what the application does>
+// Description: This is the header file of DrinkItem. This creates the variables and future methods used.
 
 #ifndef DRINKITEM_H_
 #define DRINKITEM_H_
@@ -9,12 +8,14 @@
 
 class DrinkItem
 {
+	//initialize variables to be used in the class.
 	private:
 		std::string name;
 		double price;
 		unsigned int quantity;
 		unsigned int purchased;
 		double sales;
+	//prototype methods to be instantiated later.
 	public:
 		DrinkItem();
 		DrinkItem(std::string name, double price, unsigned int quantity);
