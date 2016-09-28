@@ -9,6 +9,20 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
+
+
+DrinkItem DrinkMachine::begin()
+{
+	return drinks[0];
+}
+DrinkItem DrinkMachine::end()
+{
+	for(int i = 0;; i++)
+		if(drinks[i].getName() == "")
+			return drinks[i];
+	return DrinkItem();
+}
+
 //default constructor of a drink machine.
 //Reads in values of drinks from a file and creates a backup of the file
 //creates drinks based on input
@@ -42,6 +56,7 @@ DrinkMachine::DrinkMachine()
 	inFile.close();
 	outFile.close();
 }
+
 //destructor saves current drink machine to the file
 DrinkMachine::~DrinkMachine()
 {
@@ -58,36 +73,43 @@ DrinkMachine::~DrinkMachine()
 		outFile << std::setw(7) << drinks[i].getQuantity() << "\n";
 	}
 }
+
 //return the number of drinks being stored in the machine
 unsigned int DrinkMachine::size() const
 {
 	return numDrinks;
 }
+
 //return the max number of drinks that can be held by the drink machine
 unsigned int DrinkMachine::max_size() const
 {
 	return maxDrinks;
 }
+
 //gets the drink item at the given index of the machine
 DrinkItem& DrinkMachine::at(unsigned int index)
 {
 	return drinks[index];
 }
+
 //gets a const version of the drink item at the given index of the machine
 const DrinkItem& DrinkMachine::at(unsigned int index) const
 {
 	return drinks[index];
 }
+
 //returns whether or not the drink with the given drink id is available
 bool DrinkMachine::available(unsigned int drinkId) const
 {
 	return drinks[drinkId].getQuantity() > 0;
 }
+
 //returns the price of the drink with the given drink id
 double DrinkMachine::getPrice(unsigned int drinkId) const
 {
 	return drinks[drinkId].getPrice();
 }
+
 //checks to see if the drink can be purchased with the given amount of money
 //if it can, returns a receipt with the proper amount of change
 //otherwise returns a receipt holding an error state
@@ -103,19 +125,21 @@ Receipt DrinkMachine::purchase(unsigned int drinkId, double amount)
 		{
 			//purchases the drink and returns the change
 			drinks[drinkId].purchase();
-			return Receipt(amount - drink.getPrice());
+			return Receipt(SUCCESS, amount - drink.getPrice());
 		}
 		//sets the receipt to the "empty" state
-		return Receipt("Empty");
+		return Receipt(EMPTY);
 	}
 	//sets the receipt to the insufficient funds state
-	return Receipt("Insufficient");
+	return Receipt(INSUFFICIENT);
 }
+
 //adds the amount of drinks with the given drink id
 void DrinkMachine::addDrinks(unsigned int drinkId, unsigned int amount)
 {
 	drinks[drinkId].addDrinks(amount);
 }
+
 //outputs the drink machine version, the number of entries, and
 //the id, name, price,, quantity, number sold, and sales from each drink in the machine
 void DrinkMachine::print(std::ostream& outStream) const
@@ -128,6 +152,7 @@ void DrinkMachine::print(std::ostream& outStream) const
 	outStream << std::setw(7) << "Qty ";
 	outStream << std::setw(7) << "Sold ";
 	outStream << std::setw(9) << "Sales $\n";
+
 	for(unsigned int i = 0; i < numDrinks; i++)
 	{
 		outStream << std::setw(6) << i;
@@ -137,7 +162,22 @@ void DrinkMachine::print(std::ostream& outStream) const
 		outStream << std::setw(7) << drinks[i].getPurchased();
 		outStream << std::setw(9) << drinks[i].getSales() << "\n";
 	}
+
+	/*DrinkItem* elem = &begin();
+	const DrinkItem* endElem = &end();
+	int index = 0;
+	while(elem != endElem)
+	{
+		outStream << std::setw(6) << index++;
+		outStream << " " << std::setw(27) << std::left << (*elem).getName() << std::right;
+		outStream << std::setw(7) << (*elem).getPrice();
+		outStream << std::setw(7) << (*elem).getQuantity();
+		outStream << std::setw(7) << (*elem).getPurchased();
+		outStream << std::setw(9) << (*elem).getSales() << "\n";
+		elem++;
+	}*/
 }
+
 //gets the total sales from the drink machine
 double DrinkMachine::sales() const
 {
@@ -148,6 +188,7 @@ double DrinkMachine::sales() const
 	//returns the sum
 	return sum;
 }
+
 //gets the sales from the drink with the given drink id in the drink machine
 double DrinkMachine::sales(unsigned int drinkId) const
 {

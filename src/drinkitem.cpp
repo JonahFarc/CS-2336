@@ -6,6 +6,7 @@
 
 #include "drinkitem.h"
 #include <iostream>
+
 //default constructor
 DrinkItem::DrinkItem()
 {
@@ -16,6 +17,7 @@ DrinkItem::DrinkItem()
 	purchased = 0;
 	sales = 0;
 }
+
 //constructor given name, price, and quantity of the drink
 DrinkItem::DrinkItem(std::string name, double price, unsigned int quantity)
 {
@@ -26,46 +28,55 @@ DrinkItem::DrinkItem(std::string name, double price, unsigned int quantity)
 	purchased = 0;
 	sales = 0;
 }
+
 //gets the name of the drink
 std::string DrinkItem::getName() const
 {
 	return name;
 }
+
 //sets the name of the drink to the name specified
 void DrinkItem::setName(std::string newName)
 {
 	name = newName;
 }
+
 //gets the price of the drink
 double DrinkItem::getPrice() const
 {
 	return price;
 }
+
 //set the price of the drink to the price specified
 void DrinkItem::setPrice(double newPrice)
 {
 	price = newPrice;
 }
+
 //gets the quantity of the drink
 unsigned int DrinkItem::getQuantity() const
 {
 	return quantity;
 }
+
 //gets the number of purchased drinks of this type
 unsigned int DrinkItem::getPurchased() const
 {
 	return purchased;
 }
+
 //gets the amount of money earned by the purchases
 double DrinkItem::getSales() const
 {
 	return sales;
 }
+
 //increases the quantity by the given amount
 void DrinkItem::addDrinks(unsigned int amount)
 {
 	quantity += amount;
 }
+
 //checks if the drink has quantity, then purchases it.
 bool DrinkItem::purchase()
 {
@@ -78,4 +89,3 @@ bool DrinkItem::purchase()
 	sales += price;
 	return true;
 }
-
