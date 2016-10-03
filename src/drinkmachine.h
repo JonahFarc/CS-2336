@@ -47,9 +47,6 @@ class DrinkMachine
 		double sales() const;
 		//returns sales of the drink with the specified id in the machine
 		double sales(unsigned int drinkId) const;
-		//
-		DrinkItem begin();
-		DrinkItem end();
 };
 
 #endif /* DRINKMACHINE_H_ */

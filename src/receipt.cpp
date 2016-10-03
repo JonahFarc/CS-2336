@@ -1,6 +1,7 @@
 // Assignment 2 for CS 2336.002
 // Programmer: Dylan Yu
-// Description: Receipt has a state and change. If the state is in the success state, the change is
+// Description: Defines the methods for Receipt.
+// Receipt has a state and change. If the state is in the success state, the change is
 // the amount of change given from purchasing the drink. Otherwise, the receipt will return the error
 // and offer no change.
 

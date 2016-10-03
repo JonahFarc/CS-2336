@@ -1,6 +1,7 @@
 // Assignment 2 for CS 2336.002
 // Programmer: Dylan Yu
-// Description: DrinkItem represents a drink. It stores the name, price, quantity, number of times purchased, and total sales of a drink.
+// Description: Defines the methods for a drink item.
+// It stores the name, price, quantity, number of times purchased, and total sales of a drink.
 // It has accessors for all of its variables and mutators for the name and price. The quantity can also be incremented.
 // It can purchase a drink, changing the quantity, number of times purchased, and total sales.
 
@@ -27,6 +28,16 @@ DrinkItem::DrinkItem(std::string name, double price, unsigned int quantity)
 	this->quantity = quantity;
 	purchased = 0;
 	sales = 0;
+}
+
+//copy constructor
+DrinkItem::DrinkItem(const DrinkItem& drinkItem)
+{
+	name = drinkItem.getName();
+	price = drinkItem.getPrice();
+	quantity = drinkItem.getQuantity();
+	purchased = drinkItem.getPurchased();
+	sales = drinkItem.getSales();
 }
 
 //gets the name of the drink

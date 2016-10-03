@@ -23,6 +23,8 @@ class DrinkItem
 		DrinkItem();
 		//constructs a drink item with the given name, price and quantity
 		DrinkItem(std::string name, double price, unsigned int quantity);
+		//copy constructor
+		DrinkItem(const DrinkItem& drinkItem);
 		//returns the name of the drink
 		std::string getName() const;
 		//changes the name of the drink to the new name provided

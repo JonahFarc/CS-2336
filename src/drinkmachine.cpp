@@ -1,6 +1,6 @@
 // Assignment 2 for CS 2336.002
 // Programmer: Dylan Yu
-// Description: This is a drink machine. It stores a number of drinks up to a max value, and has a version number as well.
+// Description: Defines the methods for the drink machine. It stores a number of drinks up to a max value, and has a version number as well.
 // This machine reads in drinks through a file called "drink.txt" and stores a backup of the file. It saves the new data
 // when it is destroyed. It allows purchasing of drinks and accessing of each drink. It can also output a menu and the total sales.
 
@@ -9,19 +9,6 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
-
-
-DrinkItem DrinkMachine::begin()
-{
-	return drinks[0];
-}
-DrinkItem DrinkMachine::end()
-{
-	for(int i = 0;; i++)
-		if(drinks[i].getName() == "")
-			return drinks[i];
-	return DrinkItem();
-}
 
 //default constructor of a drink machine.
 //Reads in values of drinks from a file and creates a backup of the file
@@ -152,7 +139,6 @@ void DrinkMachine::print(std::ostream& outStream) const
 	outStream << std::setw(7) << "Qty ";
 	outStream << std::setw(7) << "Sold ";
 	outStream << std::setw(9) << "Sales $\n";
-
 	for(unsigned int i = 0; i < numDrinks; i++)
 	{
 		outStream << std::setw(6) << i;
@@ -162,20 +148,6 @@ void DrinkMachine::print(std::ostream& outStream) const
 		outStream << std::setw(7) << drinks[i].getPurchased();
 		outStream << std::setw(9) << drinks[i].getSales() << "\n";
 	}
-
-	/*DrinkItem* elem = &begin();
-	const DrinkItem* endElem = &end();
-	int index = 0;
-	while(elem != endElem)
-	{
-		outStream << std::setw(6) << index++;
-		outStream << " " << std::setw(27) << std::left << (*elem).getName() << std::right;
-		outStream << std::setw(7) << (*elem).getPrice();
-		outStream << std::setw(7) << (*elem).getQuantity();
-		outStream << std::setw(7) << (*elem).getPurchased();
-		outStream << std::setw(9) << (*elem).getSales() << "\n";
-		elem++;
-	}*/
 }
 
 //gets the total sales from the drink machine
