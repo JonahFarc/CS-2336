@@ -16,18 +16,20 @@
 
 // bring in the drink machine and associated classes
 #include "drinkmachine.h"
+#include "drinkitem.h"
+#include "receipt.h"
 
 class DrinkMachineApplication
 {
-private:
-	DrinkMachine drinkMachine;
-public:
-	DrinkMachineApplication();
-	void run();
-private:
-	void displayMenu();
-	unsigned int getMenuValue() const;
-	void restock();
+	private:
+		DrinkMachine drinkMachine;
+	public:
+		DrinkMachineApplication();
+		void run();
+	private:
+		void displayMenu();
+		unsigned int getMenuValue() const;
+		void restock();
 };
 
 // driver for the application
@@ -35,6 +37,7 @@ int main()
 {
 	DrinkMachineApplication application;
 	application.run();
+	return 0;
 }
 
 DrinkMachineApplication::DrinkMachineApplication()
@@ -226,7 +229,7 @@ void DrinkMachineApplication::restock()
 	const unsigned int amount = 5;
 
 	// go through all of the drink items and see if any are 0
-	for (unsigned int itemId; itemId < drinkMachine.size(); itemId++)
+	for (unsigned int itemId=0; itemId < drinkMachine.size(); itemId++)
 	{
 		auto drinkItem = drinkMachine.at(itemId);
 
