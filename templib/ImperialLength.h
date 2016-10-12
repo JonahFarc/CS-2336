@@ -1,17 +1,7 @@
-/*
- * ImperialLength.h
- *
- * This class implements imperial measurements (inches and feet).
- *
- * Currently the class allows you to create an imperial length object using
- *  either feet and inches, or total inches.
- *
- *  You will be adding support for the operators +, =+, -, and =-
- *
- *  You will also be adding support for the << operator.
- *
- *      Author: dgv130030
- */
+// Homework 2 for CS 2336.002
+// Programmer: Dylan Yu
+// Description: Creates an ImperialLength class. This stores a number of inches and can convert it
+// to feet and inches. It has the operators overloaded so that it can add and subtract from itself.
 
 #ifndef IMPERIALLENGTH_H_
 #define IMPERIALLENGTH_H_
@@ -32,17 +22,18 @@ class ImperialLength
 		int getFeet() const;
 		double getInches() const;
 		double getTotalInches() const;
-		// you need to implement these
+		//Overloads the += operator
 		ImperialLength& operator+=(const ImperialLength &otherLength);
+		//Overloads the + operator
 		const ImperialLength operator+(const ImperialLength &otherLength) const;
-		// you need to add prototypes for operators -= and -. 
+		//Overloads the -= operator
 		ImperialLength& operator-=(const ImperialLength &otherLength);
+		//Overloads the - operator
 		const ImperialLength operator-(const ImperialLength &otherLength) const;
 
 };
 
-// you need to impement this overloaded operator<< function. It is a global function
-// (not part of a class)
+//Overloads the << operator
 std::ostream& operator<<(std::ostream &outputStream, const ImperialLength& length);
 
 #endif /* IMPERIALLENGTH_H_ */

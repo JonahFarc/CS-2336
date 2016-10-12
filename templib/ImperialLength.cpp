@@ -1,8 +1,8 @@
-/*
- * ImperialLength.cpp
- *
- *      Author: dgv130030
- */
+// Homework 2 for CS 2336.002
+// Programmer: Dylan Yu
+// Description: Defines the methods for an ImperialLength.
+// It overloads the operators so it can add and subtract from itself. It has a special output
+// method so that its output is formatted.
 
 #include "ImperialLength.h"
 #include <string>
@@ -71,28 +71,35 @@ std::string ImperialLength::to_string(int precision) const
 	return outString.str();
 }
 
+//Overloads the += operator to sum the number of inches in both imperial lengths and returns
+//the object.
 ImperialLength& ImperialLength::operator+=(const ImperialLength &otherLength)
 {
 	totalInches = otherLength.totalInches + totalInches;
 	return (*this);
 }
 
+//Overloads the + operator to return an ImperialLength with the lengths summed together
 const ImperialLength ImperialLength::operator+(const ImperialLength &otherLength) const
 {
 	return ImperialLength(totalInches + otherLength.totalInches);
 }
 
+//Overloads the -= operator to find the difference in the number of inches in the ImperialLengths
+//and returns the object
 ImperialLength& ImperialLength::operator-=(const ImperialLength &otherLength)
 {
 	totalInches = -otherLength.totalInches + totalInches;
 	return (*this);
 }
 
+//Overloads the - operator to return an ImperialLength with the difference of the two lengths.
 const ImperialLength ImperialLength::operator-(const ImperialLength &otherLength) const
 {
 	return ImperialLength(totalInches - otherLength.totalInches);
 }
 
+//Overloads the << operator to output the ImperialLength in a particular format.
 std::ostream& operator<<(std::ostream &outputStream, const ImperialLength& length)
 {
 	outputStream << length.to_string(outputStream.precision());
