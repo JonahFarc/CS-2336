@@ -16,6 +16,10 @@ public:
 		width = wid;
 	}
 	virtual ~Rectangle(){}
+	virtual int getArea() const
+	{
+		return length*5;
+	}
 	int getLength() const
 	{
 		return length;
@@ -72,6 +76,10 @@ public:
 	{
 		length = wid;
 	}
+	int getArea() const
+	{
+		return length * 3;
+	}
 	Rectangle operator+(const Rectangle other)
 	{
 		std::cout<<"SQUARE OPERATOR PLUS\n";
@@ -108,6 +116,8 @@ int main()
 	Square square(5);
 	std::cout<<square<<"\n";
 	Rectangle xd = (square + rectangle);
-	std::cout<<xd;
+	std::cout<<xd<<"\n";
+	std::cout<< square.getArea()<<"\n";
+	std::cout<< square.Rectangle::getArea()<<"\n";
 	return 0;
 }
