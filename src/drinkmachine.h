@@ -25,6 +25,8 @@ class DrinkMachine
 		DrinkMachine();
 		//saves current state into the file to be read from later.
 		~DrinkMachine();
+		DrinkItem* begin();
+		DrinkItem* end();
 		//returns the number of drinks stored in the machine
 		unsigned int size() const;
 		//returns the maximum drinks that can be stored in the machine
