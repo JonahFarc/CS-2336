@@ -46,7 +46,7 @@ class ListNode
 		// default constructor
 		ListNode(){pNext = nullptr; pPrevious = nullptr; dataType = NULL;};
 		// copy constructor
-		ListNode(const DataType &newItem){dataType = newItem;};
+		ListNode(const DataType &newItem){pNext = nullptr; pPrevious = nullptr; dataType = newItem;};
 		// get the next node
 		ListNode* next() const {return pNext;};
 		// get the previous node
@@ -124,137 +124,197 @@ class DoubleLinkedList
 };
 
 // your implementation code goes here
+template<class DataType>
+DoubleLinkedList<DataType>::~DoubleLinkedList()
+{
+	while(!empty())
+	erase(firstNode);
+}
 
-		// display the contents of the list to std::cout
-		template<class DataType>
-		void DoubleLinkedList<DataType>::print() const
-		{
-			ListNode<DataType>* ptr = firstNode;
-			while(ptr != nullptr)
-			{
-				std::cout << ptr->dataType << "\n";
-				ptr = ptr->pNext;
-			}
-		}
+// display the contents of the list to std::cout
+template<class DataType>
+void DoubleLinkedList<DataType>::print() const
+{
+	ListNode<DataType>* ptr = firstNode;
+	while(ptr != nullptr)
+	{
+		std::cout << ptr->dataType << "\n";
+		ptr = ptr->pNext;
+	}
+}
 
-		// add an item to the front of the list
-		template<class DataType>
-		void DoubleLinkedList<DataType>::push_front(const DataType &newItem)
-		{
-			/*
-			ListNode<DataType> newNode = ListNode<DataType>(newItem);
-			if(numberNodes==0)
-			{
-				firstNode = &newNode;
-				lastNode = &newNode;
-			}
-			else
-			{
-				newNode.pNext = firstNode;
-				newNode.pPrevious = firstNode->pPrevious;
-				firstNode->pPrevious = &newNode;
-				firstNode = &newNode;
-			}
-			*/
-			ListNode<DataType> *newNode;
-			newNode->dataType = newItem;
-			firstNode->pPrevious = newNode;
-			newNode ->pNext = firstNode;
-			newNode->pPrevious=nullptr;
-			firstNode = newNode;
-			numberNodes++;
-		}
-		// add an item to the back of the list
-		template<class DataType>
-		void DoubleLinkedList<DataType>::push_back(const DataType &newItem)
-		{
-			ListNode<DataType> newNode = ListNode<DataType>(newItem);
-			if(numberNodes==0)
-			{
-				firstNode = &newNode;
-				lastNode = &newNode;
-			}
-			else
-			{
-				newNode.pPrevious = lastNode;
-				newNode.pNext = lastNode->pNext;
-				lastNode->pNext = &newNode;
-				lastNode = &newNode;
-			}
-			numberNodes++;
-		}
-		// remove an item from the front of the list
-		template<class DataType>
-		void DoubleLinkedList<DataType>::pop_front()
-		{
-			firstNode = firstNode->pNext;
+// add an item to the front of the list
+template<class DataType>
+void DoubleLinkedList<DataType>::push_front(const DataType &newItem)
+{
+	ListNode<DataType> *newNode = new ListNode<DataType>(newItem);
+	if(empty())
+	{
+		firstNode = newNode;
+		lastNode = newNode;
+	}
+	else
+	{
+		newNode->pNext = firstNode;
+		newNode->pPrevious = nullptr;
+		firstNode->pPrevious = newNode;
+		firstNode = newNode;
+	}
+	numberNodes++;
+}
+// add an item to the back of the list
+template<class DataType>
+void DoubleLinkedList<DataType>::push_back(const DataType &newItem)
+{
+	ListNode<DataType> *newNode = new ListNode<DataType>(newItem);
+	if(empty())
+	{
+		firstNode = newNode;
+		lastNode = newNode;
+	}
+	else
+	{
+		newNode->pPrevious = lastNode;
+		newNode->pNext = nullptr;
+		lastNode->pNext = newNode;
+		lastNode = newNode;
+	}
+	numberNodes++;
+}
+// remove an item from the front of the list
+template<class DataType>
+void DoubleLinkedList<DataType>::pop_front()
+{
+	ListNode<DataType> *ptr = firstNode;
+	if(!empty())
+	{
+		firstNode = firstNode->pNext;
+		if(firstNode != nullptr)
 			firstNode->pPrevious = nullptr;
-		}
-		// remove an item from the back of the list
-		template<class DataType>
-		void DoubleLinkedList<DataType>::pop_back()
+		else
+			lastNode = nullptr;
+		numberNodes--;
+	}
+	delete ptr;
+}
+// remove an item from the back of the list
+template<class DataType>
+void DoubleLinkedList<DataType>::pop_back()
+{
+	ListNode<DataType> *ptr = lastNode;
+	if(!empty())
+	{
+		lastNode = lastNode->pPrevious;
+		if(lastNode != nullptr)
+			lastNode->pNext= nullptr;
+		else
+			firstNode = nullptr;
+		numberNodes--;
+	}
+	delete ptr;
+}
+// insert newItem before the existingNode
+template<class DataType>
+void DoubleLinkedList<DataType>::insert_before (ListNode<DataType>* existingNode, const DataType &newItem)
+{
+	if(existingNode != nullptr)
+	//if(find(existingNode) != nullptr)
+	{
+		ListNode<DataType> *newNode = new ListNode<DataType>(newItem);
+		newNode->pPrevious = existingNode->pPrevious;
+		newNode->pNext = existingNode;
+		existingNode->pPrevious->pNext = newNode;
+		existingNode->pPrevious = newNode;
+		numberNodes++;
+	}
+}
+// insert newItem after the existingNode
+template<class DataType>
+void DoubleLinkedList<DataType>::insert_after (ListNode<DataType>* existingNode, const DataType &newItem)
+{
+	if(existingNode != nullptr)
+	//if(find(existingNode) != nullptr)
+	{
+		ListNode<DataType> *newNode = new ListNode<DataType>(newItem);
+		newNode->pNext = existingNode->pNext;
+		newNode->pPrevious = existingNode;
+		existingNode->pNext= newNode;
+		numberNodes++;
+	}
+}
+// find the node and return the address to the node. Return
+// nullptr if not found
+template<class DataType>
+ListNode<DataType>* DoubleLinkedList<DataType>::find(const DataType &existingItem)
+{
+	ListNode<DataType> *ptr = firstNode;
+	while(ptr != nullptr)
+	{
+		if(ptr->dataType == existingItem)
+			return ptr;
+		ptr = ptr->pNext;
+	}
+	return nullptr;
+}
+// remove the node equal to currentItem
+template<class DataType>
+bool DoubleLinkedList<DataType>::erase(const DataType &currentItem)
+{
+	ListNode<DataType> *ptr = firstNode;
+	while(ptr != nullptr)
+	{
+		if(ptr->dataType == currentItem)
 		{
-			if(numberNodes != 0)
+			if(ptr == firstNode)
 			{
-				if(numberNodes == 1)
-				{
-
-				}
-				else
-				{
-				lastNode = lastNode->pPrevious;
-				lastNode->pNext = nullptr;
-				}
+				pop_front();
+				delete ptr;
+				return true;
 			}
-		}
-		// insert newItem before the existingNode
-		template<class DataType>
-		void DoubleLinkedList<DataType>::insert_before (ListNode<DataType>* existingNode, const DataType &newItem)
-		{
-			ListNode<DataType> newNode = ListNode<DataType>(newItem);
-			newNode.pPrevious = existingNode->pPrevious;
-			newNode.pNext = existingNode;
-			existingNode->pPrevious = &newNode;
-		}
-		// insert newItem after the existingNode
-		template<class DataType>
-		void DoubleLinkedList<DataType>::insert_after (ListNode<DataType>* existingNode, const DataType &newItem)
-		{
-			ListNode<DataType> newNode = ListNode<DataType>(newItem);
-			newNode.pNext = existingNode->pNext;
-			newNode.pPrevious = existingNode;
-			existingNode->pNext= &newNode;
-		}
-		// find the node and return the address to the node. Return
-		// nullptr if not found
-		template<class DataType>
-		ListNode<DataType>* DoubleLinkedList<DataType>::find(const DataType &existingItem)
-		{
-			ListNode<DataType> *ptr = firstNode;
-			while(ptr != nullptr)
+			if(ptr == lastNode)
 			{
-				if(ptr->dataType == existingItem)
-					return ptr;
-				ptr = ptr->pNext;
+				pop_back();
+				delete ptr;
+				return true;
 			}
-			return nullptr;
+			ptr->pPrevious->pNext = ptr->pNext;
+			ptr->pNext->pPrevious = ptr->pPrevious;
+			delete ptr;
+			return true;
 		}
-		// remove the node equal to currentItem
-		template<class DataType>
-		bool DoubleLinkedList<DataType>::erase(const DataType &currentItem)
+		ptr = ptr->pNext;
+	}
+	return false;
+}
+// remove the node by address existingNode
+template<class DataType>
+bool DoubleLinkedList<DataType>::erase(ListNode<DataType> *existingNode)
+{
+	ListNode<DataType> *ptr = firstNode;
+	while(ptr != nullptr)
+	{
+		if(ptr == existingNode)
 		{
-			ListNode<DataType> *ptr = firstNode;
-			while(ptr != nullptr)
+			if(ptr == firstNode)
 			{
-				if(ptr->dataType == currentItem)
-					return ptr;
-				ptr = ptr->pNext;
+				pop_front();
+				delete ptr;
+				return true;
 			}
-			return nullptr;
+			if(ptr == lastNode)
+			{
+				pop_back();
+				delete ptr;
+				return true;
+			}
+			ptr->pPrevious->pNext = ptr->pNext;
+			ptr->pNext->pPrevious = ptr->pPrevious;
+			delete ptr;
+			return true;
 		}
-		// remove the node by address existingNode
-		template<class DataType>
-		bool DoubleLinkedList<DataType>::erase(ListNode<DataType> *existingNode);
+	}
+	return false;
+}
 
 // note the code for the debug() function is included
 // display a debug version of the list
