@@ -136,15 +136,12 @@ class DoubleLinkedList
 				ptr = ptr->pNext;
 			}
 		}
-		// dump the contends in debug format to passed in
-		// ostream - usage to cout would be:
-		//   list.debug(std::cout);
-		template<class DataType>
-		void DoubleLinkedList<DataType>::debug(std::ostream &out) const;
+
 		// add an item to the front of the list
 		template<class DataType>
 		void DoubleLinkedList<DataType>::push_front(const DataType &newItem)
 		{
+			/*
 			ListNode<DataType> newNode = ListNode<DataType>(newItem);
 			if(numberNodes==0)
 			{
@@ -158,6 +155,13 @@ class DoubleLinkedList
 				firstNode->pPrevious = &newNode;
 				firstNode = &newNode;
 			}
+			*/
+			ListNode<DataType> *newNode;
+			newNode->dataType = newItem;
+			firstNode->pPrevious = newNode;
+			newNode ->pNext = firstNode;
+			newNode->pPrevious=nullptr;
+			firstNode = newNode;
 			numberNodes++;
 		}
 		// add an item to the back of the list
@@ -207,19 +211,19 @@ class DoubleLinkedList
 		template<class DataType>
 		void DoubleLinkedList<DataType>::insert_before (ListNode<DataType>* existingNode, const DataType &newItem)
 		{
-			ListNode<DataType>* newNode = ListNode<DataType>(newItem);
-			newNode->pPrevious = existingNode->pPrevious;
-			newNode->pNext = existingNode;
-			existingNode->pPrevious = newNode;
+			ListNode<DataType> newNode = ListNode<DataType>(newItem);
+			newNode.pPrevious = existingNode->pPrevious;
+			newNode.pNext = existingNode;
+			existingNode->pPrevious = &newNode;
 		}
 		// insert newItem after the existingNode
 		template<class DataType>
 		void DoubleLinkedList<DataType>::insert_after (ListNode<DataType>* existingNode, const DataType &newItem)
 		{
-			ListNode<DataType> *newNode = ListNode<DataType>(newItem);
-			newNode->pNext = existingNode->pNext;
-			newNode->pPrevious = existingNode;
-			existingNode->pNext= newNode;
+			ListNode<DataType> newNode = ListNode<DataType>(newItem);
+			newNode.pNext = existingNode->pNext;
+			newNode.pPrevious = existingNode;
+			existingNode->pNext= &newNode;
 		}
 		// find the node and return the address to the node. Return
 		// nullptr if not found
