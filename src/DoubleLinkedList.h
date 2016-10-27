@@ -128,7 +128,7 @@ template<class DataType>
 DoubleLinkedList<DataType>::~DoubleLinkedList()
 {
 	while(!empty())
-	erase(firstNode);
+		pop_front();
 }
 
 // display the contents of the list to std::cout
@@ -150,6 +150,7 @@ void DoubleLinkedList<DataType>::push_front(const DataType &newItem)
 	ListNode<DataType> *newNode = new ListNode<DataType>(newItem);
 	if(empty())
 	{
+		std::cout<<"EMPTY";
 		firstNode = newNode;
 		lastNode = newNode;
 	}
@@ -217,9 +218,10 @@ void DoubleLinkedList<DataType>::pop_back()
 template<class DataType>
 void DoubleLinkedList<DataType>::insert_before (ListNode<DataType>* existingNode, const DataType &newItem)
 {
-	if(existingNode == firstNode)
+	if(existingNode == firstNode){
 		push_front(newItem);
-
+		return;
+	}
 	if(existingNode != nullptr)
 	//if(find(existingNode) != nullptr)
 	{
@@ -236,8 +238,10 @@ void DoubleLinkedList<DataType>::insert_before (ListNode<DataType>* existingNode
 template<class DataType>
 void DoubleLinkedList<DataType>::insert_after (ListNode<DataType>* existingNode, const DataType &newItem)
 {
-	if(existingNode == lastNode)
+	if(existingNode == lastNode){
 		push_back(newItem);
+		return;
+	}
 	if(existingNode != nullptr)
 	//if(find(existingNode) != nullptr)
 	{
@@ -274,18 +278,19 @@ bool DoubleLinkedList<DataType>::erase(const DataType &currentItem)
 			if(ptr == firstNode)
 			{
 				pop_front();
-				delete ptr;
+				numberNodes--;
 				return true;
 			}
 			if(ptr == lastNode)
 			{
 				pop_back();
-				delete ptr;
+				numberNodes--;
 				return true;
 			}
 			ptr->pPrevious->pNext = ptr->pNext;
 			ptr->pNext->pPrevious = ptr->pPrevious;
 			delete ptr;
+			numberNodes--;
 			return true;
 		}
 		ptr = ptr->pNext;
@@ -304,18 +309,19 @@ bool DoubleLinkedList<DataType>::erase(ListNode<DataType> *existingNode)
 			if(ptr == firstNode)
 			{
 				pop_front();
-				delete ptr;
+				numberNodes--;
 				return true;
 			}
 			if(ptr == lastNode)
 			{
 				pop_back();
-				delete ptr;
+				numberNodes--;
 				return true;
 			}
 			ptr->pPrevious->pNext = ptr->pNext;
 			ptr->pNext->pPrevious = ptr->pPrevious;
 			delete ptr;
+			numberNodes--;
 			return true;
 		}
 	}
