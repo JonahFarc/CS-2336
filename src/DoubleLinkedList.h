@@ -127,8 +127,19 @@ class DoubleLinkedList
 template<class DataType>
 DoubleLinkedList<DataType>::~DoubleLinkedList()
 {
-	while(!empty())
-		pop_front();
+	while(firstNode != nullptr)
+	{
+		ListNode<DataType> *ptr = firstNode;
+		firstNode = firstNode->pNext;
+		if(firstNode != nullptr)
+			firstNode->pPrevious = nullptr;
+		else{
+			lastNode = nullptr;
+			break;
+		}
+		numberNodes--;
+		delete ptr;
+	}
 }
 
 // display the contents of the list to std::cout
@@ -150,7 +161,6 @@ void DoubleLinkedList<DataType>::push_front(const DataType &newItem)
 	ListNode<DataType> *newNode = new ListNode<DataType>(newItem);
 	if(empty())
 	{
-		std::cout<<"EMPTY";
 		firstNode = newNode;
 		lastNode = newNode;
 	}
@@ -186,33 +196,33 @@ void DoubleLinkedList<DataType>::push_back(const DataType &newItem)
 template<class DataType>
 void DoubleLinkedList<DataType>::pop_front()
 {
-	ListNode<DataType> *ptr = firstNode;
 	if(!empty())
 	{
+		ListNode<DataType> *ptr = firstNode;
 		firstNode = firstNode->pNext;
 		if(firstNode != nullptr)
 			firstNode->pPrevious = nullptr;
 		else
 			lastNode = nullptr;
 		numberNodes--;
+		delete ptr;
 	}
-	delete ptr;
 }
 // remove an item from the back of the list
 template<class DataType>
 void DoubleLinkedList<DataType>::pop_back()
 {
-	ListNode<DataType> *ptr = lastNode;
 	if(!empty())
 	{
+		ListNode<DataType> *ptr = lastNode;
 		lastNode = lastNode->pPrevious;
 		if(lastNode != nullptr)
 			lastNode->pNext= nullptr;
 		else
 			firstNode = nullptr;
 		numberNodes--;
+		delete ptr;
 	}
-	delete ptr;
 }
 // insert newItem before the existingNode
 template<class DataType>
@@ -257,6 +267,8 @@ void DoubleLinkedList<DataType>::insert_after (ListNode<DataType>* existingNode,
 template<class DataType>
 ListNode<DataType>* DoubleLinkedList<DataType>::find(const DataType &existingItem)
 {
+	if(empty())
+		return nullptr;
 	ListNode<DataType> *ptr = firstNode;
 	while(ptr != nullptr)
 	{
@@ -278,13 +290,11 @@ bool DoubleLinkedList<DataType>::erase(const DataType &currentItem)
 			if(ptr == firstNode)
 			{
 				pop_front();
-				numberNodes--;
 				return true;
 			}
 			if(ptr == lastNode)
 			{
 				pop_back();
-				numberNodes--;
 				return true;
 			}
 			ptr->pPrevious->pNext = ptr->pNext;
@@ -309,13 +319,11 @@ bool DoubleLinkedList<DataType>::erase(ListNode<DataType> *existingNode)
 			if(ptr == firstNode)
 			{
 				pop_front();
-				numberNodes--;
 				return true;
 			}
 			if(ptr == lastNode)
 			{
 				pop_back();
-				numberNodes--;
 				return true;
 			}
 			ptr->pPrevious->pNext = ptr->pNext;

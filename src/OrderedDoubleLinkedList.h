@@ -56,39 +56,42 @@ OrderedDoubleLinkedList<DataType>::OrderedDoubleLinkedList()
 
 // destructor
 template <class DataType>
-OrderedDoubleLinkedList<DataType>::~OrderedDoubleLinkedList()
-{
-	list.~DoubleLinkedList();
-}
+OrderedDoubleLinkedList<DataType>::~OrderedDoubleLinkedList(){}
 
 template <class DataType>
 void OrderedDoubleLinkedList<DataType>::insert(const DataType &newItem)
 {
-	if(list.find(newItem))
-		return;
 	if(list.empty())
 	{
-		list.push_front(new ListNode<DataType>(newItem));
+		std::cout<<"ADDING "<<newItem<<" TO the FRONT OF the LIST\n";
+		list.push_front(newItem);
 		return;
 	}
-	ListNode<DataType> *ptr = list.firstNode;
-	ListNode<DataType> *newNode = new ListNode<DataType>(newItem);
+	ListNode<DataType> *ptr = list.first();
 	while(ptr != nullptr)
 	{
-		if(ptr->dataType > newItem)
+		if(ptr->data() == newItem)
 		{
-			if(ptr == list.firstNode)
-			{
-				list.push_front(newNode);
-				return;
-			}
-			newNode->pNext = ptr;
-			newNode->pPrevious = ptr->pPrevious;
-			ptr->pPrevious->pNext = newNode;
-			ptr->pPrevious = newNode;
+			std::cout<<"ITEM ALREADY EXISTS IN LIST. UPDATING DATA.\n";
+			ptr->data() = newItem;
 			return;
 		}
+		if(ptr->data() > newItem)
+		{
+			std::cout<<"ORDERED INSERT DATA < NEW ITEM " << ptr->data()<<" "<<newItem<<"\n";
+			if(ptr == list.first())
+			{
+				std::cout<<"ADDING "<<newItem<<" TO FRONT OF LIST\n";
+				list.push_front(newItem);
+				return;
+			}
+			std::cout<<"ADDING "<<newItem<<" TO LIST\n";
+			list.insert_before(ptr,newItem);
+			return;
+		}
+		ptr = ptr->next();
 	}
-	list.push_back(newNode);
+	std::cout<<"ADDING "<<newItem<<" TO END OF LIST\n";
+	list.push_back(newItem);
 }
 #endif /* ORDEREDDOUBLELINKEDLIST_H_ */
