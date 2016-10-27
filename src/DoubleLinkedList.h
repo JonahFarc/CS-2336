@@ -217,10 +217,14 @@ void DoubleLinkedList<DataType>::pop_back()
 template<class DataType>
 void DoubleLinkedList<DataType>::insert_before (ListNode<DataType>* existingNode, const DataType &newItem)
 {
+	if(existingNode == firstNode)
+		push_front(newItem);
+
 	if(existingNode != nullptr)
 	//if(find(existingNode) != nullptr)
 	{
 		ListNode<DataType> *newNode = new ListNode<DataType>(newItem);
+
 		newNode->pPrevious = existingNode->pPrevious;
 		newNode->pNext = existingNode;
 		existingNode->pPrevious->pNext = newNode;
@@ -232,6 +236,8 @@ void DoubleLinkedList<DataType>::insert_before (ListNode<DataType>* existingNode
 template<class DataType>
 void DoubleLinkedList<DataType>::insert_after (ListNode<DataType>* existingNode, const DataType &newItem)
 {
+	if(existingNode == lastNode)
+		push_back(newItem);
 	if(existingNode != nullptr)
 	//if(find(existingNode) != nullptr)
 	{
