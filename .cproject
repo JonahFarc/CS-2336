@@ -41,16 +41,6 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
-					<folderInfo id="cdt.managedbuild.config.gnu.mingw.exe.debug.284854041.589921238" name="/" resourcePath="Assignment 3">
-						<toolChain id="cdt.managedbuild.toolchain.gnu.mingw.exe.debug.1660257673" name="MinGW GCC" superClass="cdt.managedbuild.toolchain.gnu.mingw.exe.debug" unusedChildren="">
-							<tool id="cdt.managedbuild.tool.gnu.assembler.mingw.exe.debug.1739815374" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.mingw.exe.debug.479931055"/>
-							<tool id="cdt.managedbuild.tool.gnu.archiver.mingw.base.1894775991" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.mingw.base.1097816697"/>
-							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.exe.debug.1684028987" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.exe.debug.555355772"/>
-							<tool id="cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.debug.541527668" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.debug.1386157778"/>
-							<tool id="cdt.managedbuild.tool.gnu.c.linker.mingw.exe.debug.1206507614" name="MinGW C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.mingw.exe.debug.1778275603"/>
-							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.mingw.exe.debug.469423030" name="MinGW C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.mingw.exe.debug.1171718494"/>
-						</toolChain>
-					</folderInfo>
 					<sourceEntries>
 						<entry excluding="Assignment 3|Project 2|templib|src" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
