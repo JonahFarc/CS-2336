@@ -152,10 +152,8 @@ void DoubleLinkedList<DataType>::print() const
 	//loops until the end of the list
 	while(ptr != nullptr)
 	{
-		//outputs each node in a formatted fashion
-		std::cout <<"address: "<<std::setw(8)<<ptr<<", next: "<<std::setw(8)<<ptr->next()
-				<<", previous: "<<std::setw(8)<<ptr->previous()
-				<< ", value: "<<ptr->dataType << "\n";
+		//outputs each node's data
+		std::cout<<ptr->dataType<<"\n";
 		//moves on to the next pointer
 		ptr = ptr->pNext;
 	}
@@ -327,9 +325,6 @@ void DoubleLinkedList<DataType>::insert_after (ListNode<DataType>* existingNode,
 template<class DataType>
 ListNode<DataType>* DoubleLinkedList<DataType>::find(const DataType &existingItem)
 {
-	//if the list is empty, don't
-	/*if(empty())
-		return nullptr;*/
 	//set the pointer to the first node
 	ListNode<DataType> *ptr = firstNode;
 

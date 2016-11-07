@@ -58,7 +58,6 @@ void OrderedDoubleLinkedList<DataType>::insert(const DataType &newItem)
 	//if the list is empty, add the item to the list using the push_front method
 	if(list.empty())
 	{
-		std::cout<<"ADDING "<<newItem<<" TO the FRONT OF the LIST\n";
 		list.push_front(newItem);
 		return;
 	}

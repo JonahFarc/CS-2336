@@ -46,10 +46,10 @@ PhoneBookEntry::PhoneBookEntry(const PhoneBookEntry &copyFrom)
 //outputs the formatted phone book entry
 std::ostream& operator<<(std::ostream &out, const PhoneBookEntry &entry)
 {
-	out << "[[Name: " << std::setw(15) << std::left << entry.name();
-	out << "], [Number: " << std::setw(12) << std::right << entry.phoneNumber() << "]";
+	out << "{Name: " << std::setw(15) << std::left << entry.name();
+	out << ", Number: " << std::setw(12) << std::right << entry.phoneNumber();
 	if(entry.email() != "")
-		out << ", [Email: " << entry.email()<<"]";
-	out << "]";
+		out << ", Email: " << entry.email();
+	out << "}";
 	return out;
 }
