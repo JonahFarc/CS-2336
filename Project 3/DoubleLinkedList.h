@@ -1,4 +1,4 @@
-// Project 4 for CS 2336.002
+// Project 3 for CS 2336.002
 // Programmer: Dylan Yu
 // Description: Creates the DoubleLinkedList and ListNode classes. ListNode holds a previous and
 // next element as well as some data. The DoubleLinkedList takes these list nodes and has methods
