@@ -17,7 +17,7 @@ public:
 	//Default Constructor
 	Queue() {list = DoubleLinkedList<DataType>();}
 	//Copy Constructor
-	Queue(const Queue &copy) {list = DoubleLinkedList<DataType>(copy.list);}
+	Queue(const Queue &copy);
 	//Destructor
 	~Queue() {list.~DoubleLinkedList();}
 	//The empty member function will return true if the queue is empty.
@@ -36,8 +36,27 @@ public:
 	void push(const DataType& value) {list.push_back(value);}
 	//Remove the first item from the queue.
 	void pop() {list.pop_front();}
+	void debug(std::ostream &out) const
+	{
+		list.debug(out);
+	}
 };
 
+template <class DataType>
+Queue<DataType>::Queue(const Queue &copy)
+{
+	list = DoubleLinkedList<DataType>();
+	ListNode<DataType> *ptr = copy.list.first();
+
+	//loop until the end of the list has been reached
+	while(ptr != nullptr)
+	{
+		//pushing the data from the current element into the list
+		list.push_back(ptr->data());
+		//advancing the pointer
+		ptr = ptr->next();
+	}
+}
 
 
 #endif /* QUEUE_H_ */

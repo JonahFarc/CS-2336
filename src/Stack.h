@@ -17,7 +17,7 @@ public:
 	//Default constructor
 	Stack(){list = DoubleLinkedList<DataType>();}
 	//Copy Constructor
-	Stack(const Stack &other){list = DoubleLinkedList<DataType>(other.list);}
+	Stack(const Stack &copy);
 	//Destructor
 	~Stack(){list.~DoubleLinkedList();}
 	//The empty member function will return true if the stack is empty.
@@ -25,15 +25,33 @@ public:
 	//Returns the number of items in the stack.
 	std::size_t size() const {return list.size();}
 	//Returns a modifiable reference to the top item in the stack. Note, your member function can assume the stack has at least one item or you can throw an exception, the choice is yours.
-	DataType& top() {return &(list.first().dataType());}
-	//Returns a const reference to the top item in the stack. Note, your member function can assume the stack has at least one item or you can throw an exception, the choice is yours.
-	const DataType& top() const {return &(list.first().dataType());}
+	DataType& top() {return &(list.last().dataType());}
+	//Returns a const reference to thae top item in the stack. Note, your member function can assume the stack has at least one item or you can throw an exception, the choice is yours.
+	const DataType& top() const {return &(list.last().dataType());}
 	//Add a new item to the stack.
 	void push(const DataType& value) {list.push_front(value);}
 	//Remove the top item from the stack.
 	void pop() {list.pop_front();}
+	void debug(std::ostream &out) const
+	{
+		list.debug(out);
+	}
 };
 
+template <class DataType>
+Stack<DataType>::Stack(const Stack &copy)
+{
+	list = DoubleLinkedList<DataType>();
+	ListNode<DataType> *ptr = copy.list.first();
 
+	//loop until the end of the list has been reached
+	while(ptr != nullptr)
+	{
+		//pushing the data from the current element into the list
+		list.push_back(ptr->data());
+		//advancing the pointer
+		ptr = ptr->next();
+	}
+}
 
 #endif /* STACK_H_ */
