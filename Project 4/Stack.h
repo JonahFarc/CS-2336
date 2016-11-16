@@ -25,9 +25,9 @@ public:
 	//Returns the number of items in the stack.
 	std::size_t size() const {return list.size();}
 	//Returns a modifiable reference to the top item in the stack. Note, your member function can assume the stack has at least one item or you can throw an exception, the choice is yours.
-	DataType& top() {return &(list.last().dataType());}
+	DataType& top() {return list.first()->data();}
 	//Returns a const reference to thae top item in the stack. Note, your member function can assume the stack has at least one item or you can throw an exception, the choice is yours.
-	const DataType& top() const {return &(list.last().dataType());}
+	const DataType& top() const {return (list.first()->data());}
 	//Add a new item to the stack.
 	void push(const DataType& value) {list.push_front(value);}
 	//Remove the top item from the stack.

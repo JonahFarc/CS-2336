@@ -25,13 +25,13 @@ public:
 	//Returns the number of items in the queue.
 	std::size_t size() const {return list.size();}
 	//Returns a modifiable reference to the first item in the queue. Note, your member function can assume the queue has at least one item or you can throw an exception, the choice is yours.
-	DataType& front() {return list.front();}
+	DataType& front() {return list.first()->data();}
 	//Returns a const reference to the first item in the queue. Note, your member function can assume the queue has at least one item or you can throw an exception, the choice is yours.
-	const DataType& front() const {return list.front();}
+	const DataType& front() const {return list.first()->data();}
 	//Returns a modifiable reference to the last item in the queue. Note, your member function can assume the queue has at least one item or you can throw an exception, the choice is yours.
-	DataType& back() {return list.last();}
+	DataType& back() {return list.last()->data();}
 	//Returns a const reference to the last item in the queue. Note, your member function can assume the queue has at least one item or you can throw an exception, the choice is yours.
-	const DataType& back() const {return list.last();}
+	const DataType& back() const {return list.last()->data();}
 	//Add a new item to the back of the queue.
 	void push(const DataType& value) {list.push_back(value);}
 	//Remove the first item from the queue.
