@@ -154,10 +154,13 @@ void DrinkMachineApplication::displayMenu()
 	std::cout << std::endl;
 
 	// for each drink type output the drink information
-	for (unsigned int itemId=0; itemId<drinkMachine.size(); itemId++)
+	//for (unsigned int itemId=0; itemId<drinkMachine.size(); itemId++)
+	int count= 0;
+	for(auto item : drinkMachine)
 	{
-		auto item = drinkMachine.at(itemId);
-		std::cout << std::setw(ID_WIDTH) << itemId << " ";
+		//auto item = drinkMachine.at(itemId);
+		//std::cout << std::setw(ID_WIDTH) << itemId << " ";
+		std::cout << std::setw(ID_WIDTH) << count++ << " ";
 		std::cout << std::left << std::setw(NAME_WIDTH) << item.getName();
 		std::cout << std::right << std::setw(PRICE_WIDTH) << item.getPrice();
 		std::cout << std::setw(QTY_WIDTH) << item.getQuantity();

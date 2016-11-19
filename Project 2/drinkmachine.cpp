@@ -60,7 +60,14 @@ DrinkMachine::~DrinkMachine()
 		outFile << std::setw(7) << drinks[i].getQuantity() << "\n";
 	}
 }
-
+DrinkItem* DrinkMachine::begin(){
+	return (drinks);
+	//return &(drinks[0]);
+}
+DrinkItem* DrinkMachine::end(){
+	return (drinks+numDrinks);
+	//return &(drinks[numDrinks]);
+}
 //return the number of drinks being stored in the machine
 unsigned int DrinkMachine::size() const
 {
