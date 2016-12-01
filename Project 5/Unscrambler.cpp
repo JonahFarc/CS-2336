@@ -8,8 +8,9 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include "Word.h"
+
 #include "BinarySearchTree.h"
+#include "Word.h"
 
 int main()
 {
@@ -20,6 +21,8 @@ int main()
 	{
 		input>>in;
 		dictionary.insert(Word(in), update);
+		if(!input.good())
+			dictionary.print();
 	}
 	if(!input.eof())
 		std::cout<<"Error occurred while reading file.\n";
@@ -28,19 +31,17 @@ int main()
 	while(true)
 	{
 		std::cout<<"Input a scrambled word: ";
-		input>>in;
+		std::cin>>in;
 		std::cout<<"\n";
-		if(!input.good())
+		if(!std::cin.good())
 		{
-			std::cout<<"Invalid Input";
-			return 1;
+			std::cout<<"Invalid Input\n";
+			continue;
 		}
-		if(input == "adumbz")
+		if(in == "adumbz")
 			return 0;
-		if(dictionary.find(Word(in), output))
-		{
-
-		}
+		if(!dictionary.find(Word(in), output))
+			std::cout<<"Word not found!\n";
 	}
 
 }

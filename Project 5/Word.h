@@ -59,7 +59,7 @@ void Word::update(const Word other)
 
 std::ostream& operator<<(std::ostream &out, const Word &outputWord)
 {
-	out<<"Key: "<< outputWord.key << " | ";
+	out<<"Key: "<< outputWord.key << " | Values: ";
 	for(std::string val : outputWord.values)
 		out<< val << " ";
 	return out;
