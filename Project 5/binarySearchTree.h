@@ -8,6 +8,9 @@
 #ifndef PROJECT_5_BINARYSEARCHTREE_H_
 #define PROJECT_5_BINARYSEARCHTREE_H_
 
+#include <iomanip>
+#include <iostream>
+
 // forward declaration of the template class BinarySearchTree
 template<class DataType>
 class BinarySearchTree;
@@ -71,20 +74,37 @@ public:
 	void traverse(void (*itemFound)(const DataType& foundItem)) const;
 
 	//used for inorder traversal
-	void inorder(TreeNode<DataType>* p, void (*visit) (DataType& item));
+	void inorder(TreeNode<DataType>* p, void (*visit) (const DataType& item));
 	//deletes given node from tree
 	void deleteFromTree(TreeNode<DataType>* &p);
-
+	void copyTree(TreeNode<DataType>* &copiedTreeRoot, TreeNode<DataType>* otherTreeRoot);
+	void printNode(TreeNode<DataType>* node, std::ostream &out);
 };
+
+template <class DataType>
+BinarySearchTree<DataType>::BinarySearchTree(const BinarySearchTree<DataType>& other)
+{
+	if(other.root == nullptr)
+		root = nullptr;
+	else
+		copyTree(root, other.root);
+}
+
+template <class DataType>
+BinarySearchTree<DataType>::~BinarySearchTree()
+{
+	while(!empty())
+		deleteFromTree(root);
+}
 
 template <class DataType>
 void BinarySearchTree<DataType>::traverse(void (*itemFound)(const DataType& foundItem)) const
 {
-	inorder(root, *itemFound);
+	inorder(root, itemFound);
 }
 
 template <class DataType>
-void BinarySearchTree<DataType>::inorder(TreeNode<DataType>* p, void (*visit) (DataType& item))
+void BinarySearchTree<DataType>::inorder(TreeNode<DataType>* p, void (*visit) (const DataType& item))
 {
 	if (p!= nullptr)
 	{
@@ -93,6 +113,29 @@ void BinarySearchTree<DataType>::inorder(TreeNode<DataType>* p, void (*visit) (D
 		inorder(p->rLink, *visit);
 	}
 }
+
+template <class DataType>
+void BinarySearchTree<DataType>::debug(std::ostream &out) const
+{
+	const unsigned int ADDRWIDTH = 10;
+	out << "START DEBUG" << std::endl;
+	out << "root  =" << std::setw(ADDRWIDTH) << root;
+	out << ", # nodes=" << size() << std::endl;
+
+	inorder(root, printNode);
+	out << "END DEBUG" << std::endl;
+}
+
+template <class DataType>
+void BinarySearchTree<DataType>::printNode(TreeNode<DataType>* node, std::ostream &out)
+{
+	const unsigned int ADDRWIDTH = 10;
+	out << "node " << "=" << std::setw(ADDRWIDTH) << node;
+	out << ", left=" << std::setw(ADDRWIDTH)<< node->lLink;
+	out << ", right=" << std::setw(ADDRWIDTH)<< node->rLink;
+	out << ", value=" << node->info() << std::endl;
+}
+
 template <class DataType>
 void BinarySearchTree<DataType>::insert(const DataType &newItem)
 {
@@ -104,6 +147,7 @@ void BinarySearchTree<DataType>::insert(const DataType &newItem)
 			if(p->rLink == nullptr)
 			{
 				p->rLink = new TreeNode<DataType>(newItem);
+				treesize++;
 				break;
 			}
 			p = p->rLink;
@@ -113,6 +157,7 @@ void BinarySearchTree<DataType>::insert(const DataType &newItem)
 			if(p->lLink == nullptr)
 			{
 				p->lLink = new TreeNode<DataType>(newItem);
+				treesize++;
 				break;
 			}
 			p = p->lLink;
@@ -136,6 +181,7 @@ void BinarySearchTree<DataType>::insert(const DataType &newItem, void (*duplicat
 			if(p->rLink == nullptr)
 			{
 				p->rLink = new TreeNode<DataType>(newItem);
+				treesize++;
 				break;
 			}
 			p = p->rLink;
@@ -145,6 +191,7 @@ void BinarySearchTree<DataType>::insert(const DataType &newItem, void (*duplicat
 			if(p->lLink == nullptr)
 			{
 				p->lLink = new TreeNode<DataType>(newItem);
+				treesize++;
 				break;
 			}
 			p = p->lLink;
@@ -180,6 +227,7 @@ bool BinarySearchTree<DataType>::find(const DataType &searchItem, void (*foundNo
 			return true;
 		}
 	}
+	return false;
 }
 template <class DataType>
 bool BinarySearchTree<DataType>::erase(const DataType &deleteItem)
@@ -245,18 +293,21 @@ void BinarySearchTree<DataType>::deleteFromTree(TreeNode<DataType>* &p)
 		temp = p;
 		p = nullptr;
 		delete temp;
+		treesize--;
 	}
 	else if(p->lLink == nullptr)
 	{
 		temp = p;
 		p = p->rLink;
 		delete temp;
+		treesize--;
 	}
 	else if(p->rLink == nullptr)
 	{
 		temp = p;
 		p = p->lLink;
 		delete temp;
+		treesize--;
 	}
 	else
 	{
@@ -274,8 +325,22 @@ void BinarySearchTree<DataType>::deleteFromTree(TreeNode<DataType>* &p)
 			trailCurrent->rLink = current->lLink;
 
 		delete current;
+		treesize--;
 	}
 }
 
+template <class DataType>
+void BinarySearchTree<DataType>::copyTree(TreeNode<DataType>* &copiedTreeRoot, TreeNode<DataType>* otherTreeRoot)
+{
+	if(otherTreeRoot == nullptr)
+		copiedTreeRoot = nullptr;
+	else
+	{
+		copiedTreeRoot = new TreeNode<DataType>;
+		copiedTreeRoot->info = otherTreeRoot->info;
+		copyTree(copiedTreeRoot->lLink, otherTreeRoot->lLink);
+		copyTree(copiedTreeRoot->rLink, otherTreeRoot->rLink);
+	}
+}
 
 #endif /* PROJECT_5_BINARYSEARCHTREE_H_ */
