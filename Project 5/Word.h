@@ -12,46 +12,44 @@
 #include <vector>
 #include <string>
 
-using namespace std;
-
-void lower(string x)
+void lower(std::string x)
 {
 	std::transform(x.begin(), x.end(), x.begin(), ::tolower);
 }
-void sort(string x)
+void sort(std::string x)
 {
 	std::sort(x.begin(), x.end());
 }
-bool inray(vector<string> v, string x)
+bool inray(std::vector<std::string> v, std::string x)
 {
-	(std::find(v.begin(), v.end(), x) != v.end());
+	return (std::find(v.begin(), v.end(), x) != v.end());
 }
 
 class Word
 {
 public:
 	std::string key;
-	vector<string> values;
-	Word(){key = ""; values = vector<string>();}
-	Word(string value);
-	string keygen(string word){lower(word); sort(word);}
-	bool operator<(const Word other){return key < other.key;}
-	bool operator>(const Word other){return key > other.key;}
-	bool operator==(const Word other){return key == other.key;}
+	std::vector<std::string> values;
+	Word(){key = ""; values = std::vector<std::string>();}
+	Word(std::string value);
+	std::string keygen(std::string word){lower(word); sort(word); return word;}
+	bool operator<(const Word other) const {return key < other.key;}
+	bool operator>(const Word other) const {return key > other.key;}
+	bool operator==(const Word other)const{return key == other.key;}
 	friend std::ostream& operator<<(std::ostream &out, const Word &outputWord);
 	void update(const Word other);
 };
 
-Word::Word(string value)
+Word::Word(std::string value)
 {
 	key = keygen(value);
-	values = vector<string>();
+	values = std::vector<std::string>();
 	values.push_back(value);
 }
 
 void Word::update(const Word other)
 {
-	for(string val : other.values)
+	for(std::string val : other.values)
 	{
 		if(!inray(values, val))
 			values.push_back(val);
@@ -61,8 +59,10 @@ void Word::update(const Word other)
 
 std::ostream& operator<<(std::ostream &out, const Word &outputWord)
 {
-	for(string val : outputWord.values)
-		out<< val<<" ";
+	out<<"Key: "<< outputWord.key << " | ";
+	for(std::string val : outputWord.values)
+		out<< val << " ";
+	return out;
 }
 
 

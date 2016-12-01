@@ -23,7 +23,22 @@ public:
 	TreeNode<DataType> *rLink;
 	TreeNode(){lLink = nullptr; rLink = nullptr;}
 	TreeNode(DataType item){info = item; lLink = nullptr; rLink = nullptr;}
+	//the update function will update the found item with the new item.
+	template<typename type> friend void update(type &existingItem, const type &newItem);
+	template<typename type> friend void output(type x);
 };
+
+template <typename type>
+void update(type &existingItem, const type &newItem)
+{
+	existingItem.update(newItem);
+}
+
+template <typename type>
+void output(type x)
+{
+	std::cout<<x;
+}
 
 //BinarySearchTree class
 template<class DataType>
@@ -40,20 +55,18 @@ public:
 	//Returns the number of items in the binary tree.
 	std::size_t size() const {return treesize;}
 	//Display the contents of the binary tree in order by key (inorder traversal).
-	void print() const{traverse(out);}
+	void print() const{traverse(output);}
 	//Display the contents of the binary tree for debugging purposes
 	void debug(std::ostream &out) const;
 	// If the item is found, the function is called, and the find member function will return true.
 	//If the item is not found, the function is not called, and find returns false.
-	bool find(const DataType &searchItem, void (*foundNode)(const DataType&));
+	bool find(const DataType &searchItem, void (*foundNode)(const DataType& item));
 	//The erase member function will remove the specified item from the binary tree
 	bool erase(const DataType &deleteItem);
 	//Insert the item into the binary tree. If the entry already exists it should be replaced by the new one.
 	void insert(const DataType &newItem);
 	//Insert the item into the binary tree. If the item already exists the duplicateItemFound function will be called.
 	void insert(const DataType &newItem, void (*duplicateItemFound)(DataType &existingItem, const DataType &newItem));
-	//the update function will update the found item with the new item.
-	void update(DataType &existingItem, const DataType &newItem);
 	//The traverse function will do an inorder traversal of the binary tree.
 	void traverse(void (*itemFound)(const DataType& foundItem)) const;
 
@@ -61,7 +74,6 @@ public:
 	void inorder(TreeNode<DataType>* p, void (*visit) (DataType& item));
 	//deletes given node from tree
 	void deleteFromTree(TreeNode<DataType>* &p);
-	void out(DataType x){std::cout<<x;}
 
 };
 
@@ -146,13 +158,6 @@ void BinarySearchTree<DataType>::insert(const DataType &newItem, void (*duplicat
 }
 
 template <class DataType>
-void update(DataType &existingItem, const DataType &newItem)
-{
-	//existingItem.update(newItem);
-	existingItem = newItem;
-}
-
-template <class DataType>
 bool BinarySearchTree<DataType>::find(const DataType &searchItem, void (*foundNode)(const DataType& item))
 {
 	TreeNode<DataType> *p = root;
@@ -186,6 +191,7 @@ bool BinarySearchTree<DataType>::erase(const DataType &deleteItem)
 	if(empty())
 	{
 		std::cout<<"literally autistic";
+		return false;
 	}
 	else
 	{
@@ -207,6 +213,7 @@ bool BinarySearchTree<DataType>::erase(const DataType &deleteItem)
 		if(current == nullptr)
 		{
 			std::cout<<"item not in tree";
+			return false;
 		}
 		else if (found)
 		{
@@ -216,10 +223,11 @@ bool BinarySearchTree<DataType>::erase(const DataType &deleteItem)
 				deleteFromTree(trailCurrent->lLink);
 			else
 				deleteFromTree(trailCurrent->rLink);
+			return true;
 		}
 		else
 			std::cout<<"not in tree";
-
+		return false;
 	}
 }
 
