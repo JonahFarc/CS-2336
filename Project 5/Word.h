@@ -23,6 +23,7 @@ class Word
 public:
 	std::string key;
 	std::vector<std::string> values;
+	Word(){key = ""; values = std::vector<std::string>();}
 	Word(std::string value);
 	std::string keygen(std::string word);
 	bool operator<(const Word other) const {return key < other.key;}
@@ -34,16 +35,15 @@ public:
 
 Word::Word(std::string value)
 {
-	key = keygen(value);
 	values = std::vector<std::string>();
 	values.push_back(value);
+	key = keygen(value);
 }
 
 std::string Word::keygen(std::string word)
 {
 	std::transform(word.begin(), word.end(), word.begin(), ::tolower);
 	std::sort(word.begin(), word.end());
-	std::cout<<word<<std::endl;
 	return word;
 }
 void Word::update(const Word other)

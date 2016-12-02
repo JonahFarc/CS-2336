@@ -51,7 +51,7 @@ void printNode(const TreeNode<type>* node, std::ostream &out)
 	out << "node " << "=" << std::setw(ADDRWIDTH) << node;
 	out << ", left=" << std::setw(ADDRWIDTH)<< node->lLink;
 	out << ", right=" << std::setw(ADDRWIDTH)<< node->rLink;
-	out << ", value=" << node->info << std::endl;
+	out << ", value= " << node->info << std::endl;
 }
 
 //BinarySearchTree class
@@ -141,8 +141,8 @@ void BinarySearchTree<DataType>::debug(std::ostream &out) const
 {
 	const unsigned int ADDRWIDTH = 10;
 	out << "START DEBUG" << std::endl;
-	out << "root  =" << std::setw(ADDRWIDTH) << root;
-	out << ", # nodes=" << size() << std::endl;
+	out << "root =" << std::setw(ADDRWIDTH) << root;
+	out << ", # nodes= " << size() << std::endl;
 
 	inorder(root, out, printNode);
 	out << "END DEBUG" << std::endl;
@@ -247,7 +247,7 @@ bool BinarySearchTree<DataType>::find(const DataType &searchItem, void (*foundNo
 		}
 		else
 		{
-			(*foundNode)(p -> info);
+			(*foundNode)(p->info);
 			return true;
 		}
 	}
@@ -262,7 +262,6 @@ bool BinarySearchTree<DataType>::erase(const DataType &deleteItem)
 
 	if(empty())
 	{
-		std::cout<<"literally autistic";
 		return false;
 	}
 	else
@@ -284,7 +283,6 @@ bool BinarySearchTree<DataType>::erase(const DataType &deleteItem)
 		}
 		if(current == nullptr)
 		{
-			std::cout<<"item not in tree";
 			return false;
 		}
 		else if (found)
@@ -297,8 +295,6 @@ bool BinarySearchTree<DataType>::erase(const DataType &deleteItem)
 				deleteFromTree(trailCurrent->rLink);
 			return true;
 		}
-		else
-			std::cout<<"not in tree";
 		return false;
 	}
 }
