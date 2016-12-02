@@ -16,18 +16,21 @@ int main()
 {
 	BinarySearchTree<Word> dictionary = BinarySearchTree<Word>();
 	std::ifstream input("english_words.txt");
+	std::ofstream debug("WHYDOYOUSUCK.txt");
 	std::string in;
-	while(input.good())
+	std::string x;
+	while(input>>in)
 	{
-		input>>in;
 		dictionary.insert(Word(in), update);
 		if(!input.good())
-			dictionary.print();
+			std::cout<<in;
 	}
 	if(!input.eof())
 		std::cout<<"Error occurred while reading file.\n";
 	else
-		std::cout<<"Successfully added all items\n";
+		std::cout<<"Successfully added all items.\n";
+	dictionary.print();
+	dictionary.debug(debug);
 	while(true)
 	{
 		std::cout<<"Input a scrambled word: ";

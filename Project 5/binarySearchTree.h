@@ -29,6 +29,7 @@ public:
 	//the update function will update the found item with the new item.
 	template<typename type> friend void update(type &existingItem, const type &newItem);
 	template<typename type> friend void output(type x);
+	template<typename type> friend void printNode(const TreeNode<type>* node, std::ostream &out);
 };
 
 template <typename type>
@@ -40,7 +41,17 @@ void update(type &existingItem, const type &newItem)
 template <typename type>
 void output(type x)
 {
-	std::cout<<x;
+	std::cout<<x<<"\n";
+}
+
+template <typename type>
+void printNode(const TreeNode<type>* node, std::ostream &out)
+{
+	const unsigned int ADDRWIDTH = 10;
+	out << "node " << "=" << std::setw(ADDRWIDTH) << node;
+	out << ", left=" << std::setw(ADDRWIDTH)<< node->lLink;
+	out << ", right=" << std::setw(ADDRWIDTH)<< node->rLink;
+	out << ", value=" << node->info << std::endl;
 }
 
 //BinarySearchTree class
@@ -74,11 +85,11 @@ public:
 	void traverse(void (*itemFound)(const DataType& foundItem)) const;
 
 	//used for inorder traversal
-	void inorder(TreeNode<DataType>* p, void (*visit) (const DataType& item));
+	void inorder(TreeNode<DataType>* p, void (*visit) (const DataType& item)) const;
+	void inorder(TreeNode<DataType>* p, std::ostream &outstream, void (*visit) (const TreeNode<DataType>* node, std::ostream &out)) const;
 	//deletes given node from tree
 	void deleteFromTree(TreeNode<DataType>* &p);
 	void copyTree(TreeNode<DataType>* &copiedTreeRoot, TreeNode<DataType>* otherTreeRoot);
-	void printNode(TreeNode<DataType>* node, std::ostream &out);
 };
 
 template <class DataType>
@@ -104,13 +115,24 @@ void BinarySearchTree<DataType>::traverse(void (*itemFound)(const DataType& foun
 }
 
 template <class DataType>
-void BinarySearchTree<DataType>::inorder(TreeNode<DataType>* p, void (*visit) (const DataType& item))
+void BinarySearchTree<DataType>::inorder(TreeNode<DataType>* p, void (*visit) (const DataType& item)) const
 {
 	if (p!= nullptr)
 	{
 		inorder(p->lLink, *visit);
 		(*visit)(p->info);
 		inorder(p->rLink, *visit);
+	}
+}
+
+template <class DataType>
+void BinarySearchTree<DataType>::inorder(TreeNode<DataType>* p, std::ostream &outstream, void (*visit) (const TreeNode<DataType>* node, std::ostream &out)) const
+{
+	if (p!= nullptr)
+	{
+		inorder(p->lLink, outstream, *visit);
+		(*visit)(p, outstream);
+		inorder(p->rLink, outstream, *visit);
 	}
 }
 
@@ -122,23 +144,19 @@ void BinarySearchTree<DataType>::debug(std::ostream &out) const
 	out << "root  =" << std::setw(ADDRWIDTH) << root;
 	out << ", # nodes=" << size() << std::endl;
 
-	inorder(root, printNode);
+	inorder(root, out, printNode);
 	out << "END DEBUG" << std::endl;
-}
-
-template <class DataType>
-void BinarySearchTree<DataType>::printNode(TreeNode<DataType>* node, std::ostream &out)
-{
-	const unsigned int ADDRWIDTH = 10;
-	out << "node " << "=" << std::setw(ADDRWIDTH) << node;
-	out << ", left=" << std::setw(ADDRWIDTH)<< node->lLink;
-	out << ", right=" << std::setw(ADDRWIDTH)<< node->rLink;
-	out << ", value=" << node->info() << std::endl;
 }
 
 template <class DataType>
 void BinarySearchTree<DataType>::insert(const DataType &newItem)
 {
+	if(root == nullptr)
+	{
+		root = new TreeNode<DataType>(newItem);
+		treesize++;
+		return;
+	}
 	TreeNode<DataType> *p = root;
 	while(p!= nullptr)
 	{
@@ -173,6 +191,12 @@ void BinarySearchTree<DataType>::insert(const DataType &newItem)
 template <class DataType>
 void BinarySearchTree<DataType>::insert(const DataType &newItem, void (*duplicateItemFound)(DataType &existingItem, const DataType &newItem))
 {
+	if(root == nullptr)
+	{
+		root = new TreeNode<DataType>(newItem);
+		treesize++;
+		return;
+	}
 	TreeNode<DataType> *p = root;
 	while(p!= nullptr)
 	{

@@ -12,14 +12,7 @@
 #include <vector>
 #include <string>
 
-void lower(std::string x)
-{
-	std::transform(x.begin(), x.end(), x.begin(), ::tolower);
-}
-void sort(std::string x)
-{
-	std::sort(x.begin(), x.end());
-}
+
 bool inray(std::vector<std::string> v, std::string x)
 {
 	return (std::find(v.begin(), v.end(), x) != v.end());
@@ -30,9 +23,8 @@ class Word
 public:
 	std::string key;
 	std::vector<std::string> values;
-	Word(){key = ""; values = std::vector<std::string>();}
 	Word(std::string value);
-	std::string keygen(std::string word){lower(word); sort(word); return word;}
+	std::string keygen(std::string word);
 	bool operator<(const Word other) const {return key < other.key;}
 	bool operator>(const Word other) const {return key > other.key;}
 	bool operator==(const Word other)const{return key == other.key;}
@@ -47,6 +39,13 @@ Word::Word(std::string value)
 	values.push_back(value);
 }
 
+std::string Word::keygen(std::string word)
+{
+	std::transform(word.begin(), word.end(), word.begin(), ::tolower);
+	std::sort(word.begin(), word.end());
+	std::cout<<word<<std::endl;
+	return word;
+}
 void Word::update(const Word other)
 {
 	for(std::string val : other.values)
