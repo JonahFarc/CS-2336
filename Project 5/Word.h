@@ -1,23 +1,13 @@
-/*
- * Word.h
- *
- *  Created on: Nov 30, 2016
- *      Author: Korbo
- */
+// Project 5 for CS 2336.002
+// Programmer: Dylan Yu
+// Description: Creates the Word class. The Word class stores a key and some values. The
+// values are retrieved by key and the Word class is compared by key.
 
 #ifndef PROJECT_5_WORD_H_
 #define PROJECT_5_WORD_H_
-#include <cctype>
 #include <algorithm>
 #include <vector>
 #include <string>
-
-//Searches a vector for the specified value:
-//returns true if found otherwise false
-bool inray(std::vector<std::string> v, std::string x)
-{
-	return (std::find(v.begin(), v.end(), x) != v.end());
-}
 
 class Word
 {
@@ -42,37 +32,6 @@ public:
 	void update(const Word other);
 };
 
-Word::Word(std::string value)
-{
-	values = std::vector<std::string>();
-	values.push_back(value);
-	key = keygen(value);
-}
-
-std::string Word::keygen(std::string word)
-{
-	std::transform(word.begin(), word.end(), word.begin(), ::tolower);
-	std::sort(word.begin(), word.end());
-	return word;
-}
-
-void Word::update(const Word other)
-{
-	for(std::string val : other.values)
-	{
-		if(!inray(values, val))
-			values.push_back(val);
-	}
-	std::sort(values.begin(),values.end());
-}
-
-std::ostream& operator<<(std::ostream &out, const Word &outputWord)
-{
-	out<<"Key: "<< outputWord.key << " | Values: ";
-	for(std::string val : outputWord.values)
-		out<< val << " ";
-	return out;
-}
 
 
 #endif /* PROJECT_5_WORD_H_ */
