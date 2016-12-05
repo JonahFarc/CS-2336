@@ -24,11 +24,15 @@ public:
 	DataType info;
 	TreeNode<DataType> *lLink;
 	TreeNode<DataType> *rLink;
+	//Default constructor
 	TreeNode(){lLink = nullptr; rLink = nullptr;}
+	//Constructor given a certain item. Sets info to the item
 	TreeNode(DataType item){info = item; lLink = nullptr; rLink = nullptr;}
 	//the update function will update the found item with the new item.
 	template<typename type> friend void update(type &existingItem, const type &newItem);
+	//outputs the data given
 	template<typename type> friend void output(type x);
+	//prints out the node in a given format
 	template<typename type> friend void printNode(const TreeNode<type>* node, std::ostream &out);
 };
 
@@ -61,8 +65,11 @@ class BinarySearchTree
 public:
 	TreeNode<DataType> *root;
 	int treesize;
+	//Default Constructor
 	BinarySearchTree(){root = nullptr; treesize = 0;}
+	//Copy Constructor: makes a deep copy of the binary search tree
 	BinarySearchTree(const BinarySearchTree<DataType>& other);
+	//Destructor, deletes all the nodes from the tree
 	~BinarySearchTree();
 	//The empty member function will return true if the binary tree is empty.
 	bool empty() const {return (treesize == 0);}
@@ -86,9 +93,11 @@ public:
 
 	//used for inorder traversal
 	void inorder(TreeNode<DataType>* p, void (*visit) (const DataType& item)) const;
+	//inorder transversal for output
 	void inorder(TreeNode<DataType>* p, std::ostream &outstream, void (*visit) (const TreeNode<DataType>* node, std::ostream &out)) const;
 	//deletes given node from tree
 	void deleteFromTree(TreeNode<DataType>* &p);
+	//deep copies a given node and all of its children
 	void copyTree(TreeNode<DataType>* &copiedTreeRoot, TreeNode<DataType>* otherTreeRoot);
 };
 

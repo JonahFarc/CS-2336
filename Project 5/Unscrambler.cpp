@@ -29,11 +29,7 @@ int main()
 	}
 	else
 		std::cout<<"Successfully added all items.\n";
-	//dictionary.print();
 	dictionary.debug(debug);
-	//std::ifstream scrambled("scrambled_words.txt");
-	//std::string scram;
-	//while(scrambled>>scram)
 	while(true)
 	{
 		std::cout<<"Input a scrambled word: ";
@@ -45,20 +41,8 @@ int main()
 		}
 		if(in == "adumbz")
 			return 0;
-		//if(!dictionary.find(Word(scram), output))
 		if(!dictionary.find(Word(in), output))
 			std::cout<<"Word not found!\n";
 		std::cout<<"\n";
-	}
-	/*
-	std::ofstream out1("list1.txt");
-	std::ofstream out2("list2.txt");
-	std::cout << "make a copy of the list" << std::endl;
-	{
-		auto list2(dictionary);
-		std::cout << "Original list" << std::endl;
-		dictionary.debug(out1);
-		std::cout << "Copy of list" << std::endl;
-		list2.debug(out2);
-	}*/
+	}\
 }
