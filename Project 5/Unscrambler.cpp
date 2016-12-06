@@ -24,10 +24,7 @@ int main()
 	//reads in all the words in the dictionary provided
 	while(input>>in)
 	{
-		//multi value version
 		dictionary.insert(Word(in), update);
-		//single value version
-		//dictionary.insert(Word(in));
 	}
 
 	//if the file fails to be read for any reason, the program will end
